@@ -1,0 +1,58 @@
+version: '2'
+services:
+  postgres:
+    build: ./compose/postgres
+    volumes:
+      - /data/calories/postgres:/var/lib/postgresql/data
+      - /data/calories/postgres-backups:/backups
+    env_file: .env
+
+  django:
+    build:
+      context: .
+    user: django
+    depends_on:
+      - postgres
+      - redis
+    command: /gunicorn.sh
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    build: ./compose/nginx
+    depends_on:
+      - django
+    ports:
+      - "0.0.0.0:80:80"
+
+  redis:
+    image: redis:3.0
+  
+  celeryworker:
+    build:
+      context: .
+    user: django
+    env_file: .env
+    depends_on:
+     - postgres
+     - redis
+    command: celery -A calories.taskapp worker -l INFO
+    depends_on:
+      - postgres
+      - redis
+
+  celerybeat:
+    build:
+      context: .
+    user: django
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+    command: celery -A calories.taskapp beat -l INFO
+    depends_on:
+      - postgres
+      - redis
+  

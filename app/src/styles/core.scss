@@ -1,0 +1,84 @@
+:global {
+  @import 'base';
+  @import 'vendor/normalize';
+
+  // Some best-practice CSS that's useful for most apps
+  // Just remove them if they're not what you want
+  html {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  .menu {
+    background-color: #1E4072;
+  }
+
+  .float_btn {
+    position: absolute;
+    left: auto;
+    top: 35px;
+    right: 60px;
+    z-index: 1110;
+  }
+
+  @media (max-width: 460px) {
+    .float_btn {
+      position: fixed;
+      top: auto;
+      bottom: 70px;
+    }
+  }
+
+  .form {
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .form-wrapper {
+    text-align: center;
+  }
+
+  @media (max-width: 460px) {
+    .stats-form {
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .stats-wrapper {
+      text-align: center;
+    }
+  }
+
+
+  .stats {
+    padding: 10px;
+  }
+
+  .stats * {
+    font-size: 80%;
+  }
+
+  .stat-title {
+    margin-right: 5px;
+    top: -3px;
+    position: relative;
+  }
+  .stat-value {
+    margin-left: 5px;
+    top: -3px;
+    position: relative;
+  }
+
+}
